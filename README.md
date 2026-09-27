@@ -84,7 +84,7 @@ language the file declares, which only works for formats that carry one: a
 `.txt` file, or an EPUB whose metadata is empty or names a language with no
 model, is an error rather than a silent guess.
 
-### The columns
+### Output
 
 `rank`, `lemma`, `count`, `word_type` — as CSV rows or, with `--format json`,
 an array of objects with those four keys.
@@ -146,35 +146,3 @@ analyze_book('Dune.epub', options)        # entries + counts + language
 analyze_texts(['some text'], options)     # same pipeline, no file involved
 run('Dune.epub', options)                 # what the CLI does; returns 0 or 1
 ```
-
-## Good to know
-
-- The name filter depends on the tagger, so invented names are sometimes
-  mislabelled as common nouns and survive. On *Dune*, `harkonnen` lands at rank
-  278 while `Paul`, `Jessica`, `Arrakis` and `Fremen` are removed.
-- Front and back matter (blurbs, copyright) is counted with the prose — around
-  0.3% of a typical novel.
-- A few rows are numerals, prepositions and interjections (`one`, `beneath`,
-  `shall`). They are kept on purpose: they are real vocabulary.
-- Stopwords are only dropped when they are function words. Stop lists — German
-  especially — also flag inflected content verbs, so a naive filter would take
-  the lemma `gehen` down with `ging`.
-- Counting is case-insensitive but display is not: English `Fear` merges with
-  `fear`, while German nouns keep their capital (`Haus`, not `haus`).
-
-## Extending or contributing
-
-Input formats, NLP backends and output formats each sit behind an interface
-with its own package (`readers/`, `lemmatizers/`, `writers/`), so a new EPUB
-library, a PDF reader, another lemmatizer or a JSON output is a subclass plus
-one line in that package's registry. Each backend owns its own options
-dataclass, which becomes a section of `Options` and a group of CLI flags.
-
-```sh
-uv run pytest                                       # 141 tests
-uv run ruff check src tests && uv run ruff format src tests
-uv run pre-commit install                           # hooks on commit
-```
-
-CI runs lint, format check and tests on every push and pull request; pushing a
-new version to `main` tags a release and publishes to PyPI.
