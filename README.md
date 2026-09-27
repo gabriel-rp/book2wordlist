@@ -1,8 +1,15 @@
 # book2wordlist
 
-Turn a book into a ranked wordlist: the vocabulary actually worth learning
-from it.
+Turn a book into a ranked lemma wordlist that you can use for vocabulary acquisition.
 
+This tool was designed for language learning. The idea is that to read a book in your target language, it's helpful to be familiar with its vocabulary.
+
+You can use book2wordlist alongside [germanki](https://github.com/gabriel-rp/germanki) or another tool of your preference to create flashcards and study the book's vocabulary.
+
+## Disclaimer - Book Files
+This tool only processes e-book files. You must provide a DRM-free version of the book in one of the accepted formats.
+
+## Lemmas
 Inflected forms collapse onto their lemma (`said`/`saying`/`says` → `say`), and
 function words, names and numbers are filtered out. On *Dune* the top of the
 list is `say, see, think, man, know, hand, look, come, ask, take` rather than
